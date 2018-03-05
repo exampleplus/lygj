@@ -9,6 +9,7 @@
 		<link rel="shortcut icon" type="img/x-icon" href="img/fav.ico"/>
 		<link rel="stylesheet" href="css/basic.css" />
 		<link rel="stylesheet" href="css/style.css" />
+		<link rel="stylesheet" href="http://at.alicdn.com/t/font_526177_wrfz5ui83pfzuxr.css" />
 		<style>
 			 a {
                 text-decoration: none;
@@ -44,10 +45,10 @@
 			</h1>
 			<div class="content">
 				<div class="banner">
-					<img src="img/banner.png"/>
+					<img src="img/banner3.png"/>
 				</div>
 				<!--注册步骤 start-->
-				<div class="step">
+				<!--<div class="step">
 					<ul class="clearfix">
 						<li class="regisiter">
 							<div class="aa"><img src="img/regisiter.png"/></div>
@@ -74,38 +75,48 @@
 							</div>
 						</li>
 					</ul>
-				</div>
+				</div>-->
 				<!--注册步骤 end-->
+				<div class="">
+					
+				</div>
 				<!--信息填写-->
 				<div class="login">
 					<!--提示错误信息-->
 					<p id="cont"></p>
 					<div class="input_tel">
-						<img src="img/tel.png" class="tel"/>
+						<!--<img src="img/tel.png" class="icon iconfont icon-msnui-tel tel"/>-->
+						<span class="icon iconfont icon-msnui-tel tel"></span>
 						<input type="text" placeholder="请输入手机号码" id="user_tel"/>
 					</div>
 					<div class="input_identify">
-					    <img src="img/identify1.png" class="identify"/>
+					    <!--<img src="img/identify1.png" class="identify"/>-->
+					    <span class="icon iconfont icon-yuechi identify"></span>
 						<input type="text" placeholder="验证码" class="code" id="inputCode"/>
 						<div class="numCode" id="checkCode"><img id="imgCap" onclick="createCode()"/></div>
 					</div>
 					<input type="hidden" name="" id="hide" value="" />
 					<span class="changeCode" onclick="createCode()">看不清？点击换一张</span>
 					<div class="input_identify">
-					    <img src="img/identify.png" class="identify identify1"/>
-						<input type="text" placeholder="请输入验证码" class="code" id="code" />
+					    <!--<img src="img/identify.png" class="identify identify1"/>-->
+					    <span class="icon iconfont icon-anquan identify identify1"></span>
+						<input type="text" placeholder="请输入手机验证码" class="code" id="code" />
 						<input type="button" name="" role="button" id="sendcode" value="发送验证码" />
 					</div>
 					<div class="input_password">
-					    <img src="img/password.png" class="pwd"/>
+					    <!--<img src="img/password.png" class="pwd"/>-->
+					    <span class="icon iconfont pwd icon-iconset0114"></span>
 						<input type="password" placeholder="请设置6-12位的密码" id="pwd"/>
 					</div>
 					<div class="regt">
 						<input type="button" value="立即注册" id="btn"/>
 					</div>
-					<div class="deal">
-						<p><img src="img/agree.png" alt=""  class="" /><span class="agreeDeal">《我同意用户服务协议》</span></p>
+					<div class="func">
+						<img src="img/func.png" alt="" />
 					</div>
+					<!--<div class="deal">
+						<p><img src="img/agree.png" alt=""  class="" /><span class="agreeDeal">《我同意用户服务协议》</span></p>
+					</div>-->
 				</div>
 			</div>
 		</div>

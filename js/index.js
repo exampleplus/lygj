@@ -25,12 +25,12 @@
 //		        var pwd=$('#pwd').val()//密码
 		        var code=$('#code').val()//手机验证码
 		        var inputCode=$("#inputCode").val();//图形验证码
-		        	
-					while(inputCode.indexOf(" ")!=-1)
-					{
-					 	inputCode=inputCode.replace(" ","");
-					}
-		        console.log(inputCode)
+		        var reg =/\s/;//是否有空格正则
+//					while(inputCode.indexOf(" ")!=-1)
+//					{
+//					 	inputCode=inputCode.replace(" ","");
+//					}
+//		       console.log(inputCode)
 		        var cont=$("#cont");
 				var times=60;
 				var timer=null;
@@ -45,6 +45,9 @@
 				 }else if(!checkVar(inputCode)){
 				 		cont.text('*请输入图形验证码').show().delay(2000).fadeOut();
 				 		return;
+				 }else if(reg.test(inputCode) == true){
+				 		cont.text('图形验证码不能含有空格，请在英文输入法下填写').show().delay(2000).fadeOut();
+				 		return;
 				 }
 				timer=setInterval(function(){
 					times--;
@@ -54,7 +57,7 @@
 					if(times==0){
 				          sendcode.removeAttr("disabled");
 				          sendcode.val("发送验证码");
-				          sendcode.css('background',"rgb(255,158,0)");
+				          sendcode.css('background',"#207EFF");
 				          clearInterval(timer);
 				          times = 60;
 				        }
@@ -66,7 +69,6 @@
 					  	jsonp: "jsonpCallback",
 					  	async:true,
 					  	success:function(res){
-					  		console.log(res)
 					  		if(res.code==-1){
 								clearInterval(timer);
 					  			createCode();
@@ -84,10 +86,11 @@
 					  				window.location.href="http://api.zhuliqianbao.com/qb?uid="+uid+"&mobilePhone="+mobilePhone;
 //					  				window.location.href="../../zlqb/index.html?uid="+uid+"&mobilePhone="+mobilePhone;
 					  			},2000)
-					  			if(res.message!="成功获取验证码"){
-								 	clearInterval(timer);
-								}
 					  		}
+					  		cont.text(res.message).show().delay(1000).fadeOut();
+//					  		if(res.message!="成功获取验证码"){
+//								 	clearInterval(timer);
+//								}
 	//				  		code=0成功   code=-1手机号已被注册
 				  		},
 				  })
