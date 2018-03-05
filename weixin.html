@@ -8,11 +8,15 @@
         <script>
             window.onload = function() {
                 var u = navigator.userAgent;
+                var uid=sessionStorage.getItem("uid");
+                var mobilePhone=sessionStorage.getItem("mobilePhone");
+                console.log(uid);
                 if (u.indexOf('Android') > -1 || u.indexOf('Linux') > -1) { //安卓手机
-//                                        alert("安卓手机");
+//                            alert("安卓手机");
                     window.location.href = "http://imtt.dd.qq.com/16891/D0DF017DE9A3B3401142531FCBA688F4.apk?fsname=com.zlqb_1.1.4_14.apk&csr=1bbd";
                 } else if (u.indexOf('iPhone') > -1) { //苹果手机
-                    window.location.href = "http://api.zhuliqianbao.com/qb2/";
+                	   console.log(uid)
+                    window.location.href = "http://api.zhuliqianbao.com/qb?uid="+uid+"&mobilePhone="+mobilePhone;
                 } else if (u.indexOf('Windows Phone') > -1) { //winphone手机
                     alert("WindowsPhone暂未推出。");
                 } else if (u.indexOf('Windows NT') > -1) { //Windows电脑
@@ -64,7 +68,6 @@
                 width: 100%;
                 z-index: 100;
             }
-            
             .weixin-tip p {
                 text-align: center;
                 margin-top: 10%;

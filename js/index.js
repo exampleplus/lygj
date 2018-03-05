@@ -1,3 +1,5 @@
+				var host="http://api.zhuliqianbao.com/lygj/"
+//				var host="http://192.168.1.63:8080/"
 				//判断变量是否为空
 				function checkVar(param){
 					if(param=='' || param==undefined || param==null){
@@ -9,10 +11,10 @@
 				var hide=$("#hide");
 				var imgCap=$("#imgCap");
 				hide.val(timestamp);
-				imgCap.attr("src","http://api.zhuliqianbao.com/lygj/captcha.svl?RCaptchaKey="+timestamp);
+				imgCap.attr("src",host+"captcha.svl?RCaptchaKey="+timestamp);
 			function createCode(){
 				var timestamp2 = (new Date()).valueOf();
-				imgCap.attr("src","http://api.zhuliqianbao.com/lygj/captcha.svl?RCaptchaKey="+timestamp2);
+				imgCap.attr("src",host+"captcha.svl?RCaptchaKey="+timestamp2);
 				hide.val(timestamp2);
 			}
 			//点击发送验证码
@@ -20,14 +22,20 @@
 			sendcode.click(function(){
 				var phonePattern = /(^(([0\+]\d{2,3}-)?(0\d{2,3})-)(\d{7,8})(-(\d{3,}))?$)|(^(([0\+]\d{2,3})?(0\d{2,3}))(\d{7,8})((\d{3,}))?$)|(^0{0,1}1[3|4|5|6|7|8|9][0-9]{9}$)/;
 				var phoneNum=$('#user_tel').val();//手机号
-		        var pwd=$('#pwd').val()//密码
+//		        var pwd=$('#pwd').val()//密码
 		        var code=$('#code').val()//手机验证码
-		        var inputCode=$("#inputCode").val()//图形验证码
+		        var inputCode=$("#inputCode").val();//图形验证码
+		        	
+					while(inputCode.indexOf(" ")!=-1)
+					{
+					 	inputCode=inputCode.replace(" ","");
+					}
+		        console.log(inputCode)
 		        var cont=$("#cont");
 				var times=60;
 				var timer=null;
 				var val=$("#hide").val();
-				var url1="http://api.zhuliqianbao.com/lygj/guanjia_api/act/light-loan-lyb/registerCode2/"+phoneNum+"/"+inputCode+"?RCaptchaKey="+val;
+				var url1=host+"guanjia_api/act/light-loan-lyb/registerCode2/"+phoneNum+"/"+inputCode+"?RCaptchaKey="+val;
 				 if(!checkVar(phoneNum)){
 				 	cont.text('*请输入手机号').show().delay(2000).fadeOut();
 				 	return;
@@ -58,14 +66,29 @@
 					  	jsonp: "jsonpCallback",
 					  	async:true,
 					  	success:function(res){
+					  		console.log(res)
 					  		if(res.code==-1){
+								clearInterval(timer);
 					  			createCode();
+					  			var uid=res.uid;
+					  			var mobilePhone=res.mobilePhone;
+					  			if(uid == "" || uid == undefined || uid == null ){
+					  				uid="";
+					  				mobilePhone="";
+					  			}
+					  			cont.text(res.message).show().delay(1000).fadeOut();
+					  			if(res.message=="图形验证码错误"){
+					  				return;
+					  			}
+					  			setTimeout(function(){
+					  				window.location.href="http://api.zhuliqianbao.com/qb?uid="+uid+"&mobilePhone="+mobilePhone;
+//					  				window.location.href="../../zlqb/index.html?uid="+uid+"&mobilePhone="+mobilePhone;
+					  			},2000)
+					  			if(res.message!="成功获取验证码"){
+								 	clearInterval(timer);
+								}
 					  		}
 	//				  		code=0成功   code=-1手机号已被注册
-							cont.text(res.message).show().delay(3000).fadeOut();
-							if(res.message!="成功获取验证码"){
-								 clearInterval(timer);
-							}
 				  		},
 				  })
 		})
@@ -110,11 +133,16 @@
     		$.ajax({
     			type:"post",
     			async:true,
-    			url:"http://api.zhuliqianbao.com/lygj/guanjia_api/act/light-loan-lyb/register3?phone="+phoneNum+"&password="+hash+"&code="+code+"&user_from="+user_from,
+    			url:host+"guanjia_api/act/light-loan-lyb/register3?phone="+phoneNum+"&pwd="+hash+"&code="+code+"&user_from="+user_from,
     			success:function(res){
+    				var uid=res.uid;
+    				var mobilePhone=res.mobilePhone;
+    				console.log(uid)
 					if(res.code==0){
 						cont.text("注册成功,即将前往下载").show().delay(2000).fadeOut();
-						setTimeout(function(){
+						sessionStorage.setItem("uid",uid);
+						sessionStorage.setItem("mobilePhone",mobilePhone);
+							setTimeout(function(){
 							window.location.href="weixin.html"
 						},2000)
 					}
